@@ -477,6 +477,22 @@ int flash_area_erase_sector(int fa_id, uint32_t sector_idx);
 
 int flash_area_get_max_sector(int fa_id, uint32_t *total_count);
 
+/****************************************************************************
+ * Name: flash_area_bulk_erase
+ *
+ * Description:
+ *   Erase Complete Flash Partition
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_bulk_erase(int fa_id);
+
 #ifdef __cplusplus
 }
 #endif

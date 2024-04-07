@@ -897,3 +897,39 @@ int flash_area_get_max_sector(int fa_id, uint32_t *total_count)
 
   return 0;
 }
+
+/****************************************************************************
+ * Name: flash_area_bulk_erase
+ *
+ * Description:
+ *   Erase Complete Flash Partition
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_bulk_erase(int fa_id)
+{
+  struct flash_device_s *dev = lookup_flash_device_by_id(fa_id);
+  int fd;
+  int ret;
+  
+  BOOT_LOG_INF("flash_area_bulk_erase: ErasingID:%" PRIu8 " fa_size:%" PRIu32,
+                dev->fa_cfg->fa_id, dev->fa_cfg->fa_size);
+   
+  fd = dev->fd;
+  if (fd < 0)
+  {
+      int errcode = errno;
+      BOOT_LOG_ERR("MTD device must be open before this operation: %d", errcode);
+      return ERROR;
+  }
+
+  ret = ioctl(fd, MTDIOC_BULKERASE);
+  BOOT_LOG_INF("flash_area_bulk_erase: complete ret%" PRIu32, ret);
+  return ret;
+}
