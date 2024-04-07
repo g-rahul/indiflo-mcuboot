@@ -442,6 +442,41 @@ int flash_area_id_to_multi_image_slot(int image_index, int area_id);
 
 int flash_area_id_from_image_offset(uint32_t offset);
 
+
+/****************************************************************************
+ * Name: flash_area_erase_sector
+ *
+ * Description:
+ *   Erase sector
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ *   sector_idx - sector number
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_erase_sector(int fa_id, uint32_t sector_idx);
+
+/****************************************************************************
+ * Name: flash_area_get_max_sector
+ *
+ * Description:
+ *   Get total sector in a give flash area
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ *   total_count - pointer to store erase block count
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_get_max_sector(int fa_id, uint32_t *total_count);
+
 #ifdef __cplusplus
 }
 #endif

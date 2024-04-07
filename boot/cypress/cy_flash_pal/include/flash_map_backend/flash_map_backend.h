@@ -192,4 +192,8 @@ uint8_t flash_area_erased_val(const struct flash_area *fap);
 int flash_area_read_is_empty(const struct flash_area *fa, uint32_t off,
         void *dst, uint32_t len);
 
+int flash_area_get_max_sector(int fa_id, uint32_t *total_count);
+
+int flash_area_erase_sector(int fa_id, uint32_t sector_idx);
+
 #endif /* __FLASH_MAP_BACKEND_H__ */

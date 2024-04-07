@@ -123,6 +123,8 @@ int main(int argc, FAR char *argv[])
   }
 #endif
 
+  boot_state_main();
+
   FIH_CALL(boot_go, fih_rc, &rsp);
 
   if (FIH_NOT_EQ(fih_rc, FIH_SUCCESS))

@@ -85,7 +85,7 @@ static struct boot_loader_state boot_data;
 #if BOOT_MAX_ALIGN > 1024
 #define BUF_SZ BOOT_MAX_ALIGN
 #else
-#define BUF_SZ 1024
+#define BUF_SZ 64*1024
 #endif
 
 #define NO_ACTIVE_SLOT UINT32_MAX

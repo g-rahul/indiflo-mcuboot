@@ -842,3 +842,58 @@ int flash_area_get_sector(const struct flash_area *fap, off_t off,
 
   return 0;
 }
+
+/****************************************************************************
+ * Name: flash_area_erase_sector
+ *
+ * Description:
+ *   Erase sector
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ *   sector_idx - sector number
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_erase_sector(int fa_id, uint32_t sector_idx)
+{
+  uint32_t off = 0xFFFFFFFF;
+  struct flash_device_s *dev = lookup_flash_device_by_id(fa_id);
+  const size_t sector_size = dev->mtdgeo.erasesize;
+  
+  BOOT_LOG_INF("ID:%" PRIu8 " offset:%" PRIu32 " sector_idx:%" PRIu32,
+               dev->fa_cfg->fa_id, off, sector_idx);
+
+  off = sector_size * sector_idx;
+
+  flash_area_erase(dev->fa_cfg, off, sector_size);
+
+  return 0;
+}
+
+/****************************************************************************
+ * Name: flash_area_erase_sector
+ *
+ * Description:
+ *   Get total sector in a give flash area
+ *
+ * Input Parameters:
+ *   fa_id - flash area id
+ *   total_count - pointer to store erase block count
+ * 
+ * Returned Value:
+ *   Returns 0 on success, or an error code on failure.
+ *
+ ****************************************************************************/
+
+int flash_area_get_max_sector(int fa_id, uint32_t *total_count)
+{
+  struct flash_device_s *dev = lookup_flash_device_by_id(fa_id);
+
+  *total_count = dev->mtdgeo.neraseblocks;
+
+  return 0;
+}

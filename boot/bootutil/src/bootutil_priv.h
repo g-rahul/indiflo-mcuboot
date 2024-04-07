@@ -49,7 +49,7 @@ extern "C" {
 
 struct flash_area;
 
-#define BOOT_TMPBUF_SZ  256
+#define BOOT_TMPBUF_SZ  1024*16
 
 /** Number of image slots in flash; currently limited to two. */
 #define BOOT_NUM_SLOTS                  2
