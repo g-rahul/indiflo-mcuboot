@@ -126,12 +126,12 @@ parse_ec256_enckey(uint8_t **p, uint8_t *end, uint8_t *private_key)
         return -5;
     }
 
-    if (alg.MBEDTLS_CONTEXT_MEMBER(len) != sizeof(ec_pubkey_oid) - 1 ||
-        memcmp(alg.MBEDTLS_CONTEXT_MEMBER(p), ec_pubkey_oid, sizeof(ec_pubkey_oid) - 1)) {
+    if (alg.ASN1_CONTEXT_MEMBER(len) != sizeof(ec_pubkey_oid) - 1 ||
+        memcmp(alg.ASN1_CONTEXT_MEMBER(p), ec_pubkey_oid, sizeof(ec_pubkey_oid) - 1)) {
         return -6;
     }
-    if (param.MBEDTLS_CONTEXT_MEMBER(len) != sizeof(ec_secp256r1_oid) - 1 ||
-        memcmp(param.MBEDTLS_CONTEXT_MEMBER(p), ec_secp256r1_oid, sizeof(ec_secp256r1_oid) - 1)) {
+    if (param.ASN1_CONTEXT_MEMBER(len) != sizeof(ec_secp256r1_oid) - 1 ||
+        memcmp(param.ASN1_CONTEXT_MEMBER(p), ec_secp256r1_oid, sizeof(ec_secp256r1_oid) - 1)) {
         return -7;
     }
 
@@ -203,8 +203,8 @@ parse_x25519_enckey(uint8_t **p, uint8_t *end, uint8_t *private_key)
         return -4;
     }
 
-    if (alg.MBEDTLS_CONTEXT_MEMBER(len) != sizeof(ec_pubkey_oid) - 1 ||
-        memcmp(alg.MBEDTLS_CONTEXT_MEMBER(p), ec_pubkey_oid, sizeof(ec_pubkey_oid) - 1)) {
+    if (alg.ASN1_CONTEXT_MEMBER(len) != sizeof(ec_pubkey_oid) - 1 ||
+        memcmp(alg.ASN1_CONTEXT_MEMBER(p), ec_pubkey_oid, sizeof(ec_pubkey_oid) - 1)) {
         return -5;
     }
 
@@ -276,6 +276,8 @@ hkdf(uint8_t *ikm, uint16_t ikm_len, uint8_t *info, uint16_t info_len,
         goto error;
     }
 
+    bootutil_hmac_sha256_drop(&hmac);
+
     /*
      * Expand
      */
@@ -315,6 +317,8 @@ hkdf(uint8_t *ikm, uint16_t ikm_len, uint8_t *info, uint16_t info_len,
             goto error;
         }
 
+        bootutil_hmac_sha256_drop(&hmac);
+
         if (len > BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE) {
             memcpy(&okm[off], T, BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE);
             len -= BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE;
@@ -324,7 +328,6 @@ hkdf(uint8_t *ikm, uint16_t ikm_len, uint8_t *info, uint16_t info_len,
         }
     }
 
-    bootutil_hmac_sha256_drop(&hmac);
     return 0;
 
 error:
