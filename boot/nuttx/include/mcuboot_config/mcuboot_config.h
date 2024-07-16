@@ -42,10 +42,9 @@ int boot_state_main(void);
  */
 
 /* Uncomment for RSA signature support */
-
 #ifdef CONFIG_MCUBOOT_SIGN_RSA
-#  define MCUBOOT_SIGN_RSA
-#ifdef CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN
+#define MCUBOOT_SIGN_RSA
+#  ifdef CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN
 
 #  if (CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN != 2048 && \
        CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN != 3072)
@@ -56,9 +55,18 @@ int boot_state_main(void);
 #endif
 #endif
 
-/* Uncomment for ECDSA signatures using curve P-256. */
+/* Uncomment for EC256 signature support */
+#ifdef CONFIG_MCUBOOT_SIGN_EC256
+#  define MCUBOOT_SIGN_EC256
+#endif
 
-/* #define MCUBOOT_SIGN_EC256 */
+/* Encrypted Image Payload + Protected TLV */
+#ifdef CONFIG_MCUBOOT_ENC_IMAGES
+#define MCUBOOT_ENC_IMAGES
+#  ifdef CONFIG_MCUBOOT_ENCRYPT_RSA
+#  define MCUBOOT_ENCRYPT_RSA
+#endif
+#endif
 
 /* Upgrade mode
  *

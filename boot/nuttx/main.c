@@ -123,7 +123,9 @@ int main(int argc, FAR char *argv[])
   }
 #endif
 
+#ifdef CONFIG_PX4_BOOT_STATE
   boot_state_main();
+#endif
 
   FIH_CALL(boot_go, fih_rc, &rsp);
 

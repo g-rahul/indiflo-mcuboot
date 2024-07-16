@@ -47,7 +47,7 @@
 #include "mbedtls/version.h"
 #if defined(BOOTUTIL_CRYPTO_RSA_CRYPT_ENABLED)
 #if MBEDTLS_VERSION_NUMBER >= 0x03000000
-#include "rsa_alt_helpers.h"
+#include "mbedtls/rsa_alt_helpers.h"
 #else
 #include "mbedtls/rsa_internal.h"
 #endif
